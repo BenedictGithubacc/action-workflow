@@ -16,7 +16,6 @@ jobs:
       - name: Show workspace path
         run: echo "Workspace is: $GITHUB_WORKSPACE"
 
-
       - name: Update package list
         run: sudo apt update
 
@@ -29,5 +28,6 @@ jobs:
 
       - name: List running containers
         run: docker ps
+
 
         
