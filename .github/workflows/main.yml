@@ -1,0 +1,10 @@
+name: Stable build
+
+workflow_dispatch:
+
+jobs:
+  runs-on: self-hosted
+  name: install apache
+  run: apt update
+    apt install apache -y
+    apache --version
