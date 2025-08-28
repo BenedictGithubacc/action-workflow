@@ -22,6 +22,9 @@ jobs:
       - name: Change to project directory
         run: cd ${{ github.workspace }}
 
+      -name: useradd
+        run: sudo usermod -aG docker $USER
+
       - name: Bring up services
         run: docker-compose -f pwd.yml up -d
 
