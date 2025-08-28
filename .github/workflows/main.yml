@@ -1,10 +1,25 @@
 name: Stable build
 
-workflow_dispatch:
+on:
+  workflow_dispatch:
 
 jobs:
-  runs-on: self-hosted
-  name: install apache
-  run: apt update
-    apt install apache -y
-    apache --version
+  install-apache:
+    runs-on: self-hosted
+    name: install apache
+    steps:
+      - name: Update package list
+        run: sudo apt update
+        
+      - name: Install Apache
+        run: sudo apt install apache2 -y
+        
+      - name: Check Apache version
+        run: apache2 -V
+        
+      - name: Start Apache service
+        run: sudo systemctl start apache2
+        
+      - name: Enable Apache service
+        run: sudo systemctl enable apache2
+
