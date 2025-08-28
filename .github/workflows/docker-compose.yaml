@@ -13,21 +13,7 @@ jobs:
           ref: Devtest1
           token: ${{ secrets.PAT }}
 
-      - name: Show workspace path
-        run: echo "Workspace is: $GITHUB_WORKSPACE"
-
-      - name: Update package list
-        run: sudo apt update
-
-      - name: Add user to docker group
-        run: sudo usermod -aG docker $USER
-
-      - name: Bring up services
-        run: docker-compose -f pwd.yml up -d
-        working-directory: ${{ github.workspace }}
-
-      - name: List running containers
-        run: docker ps
+      
 
 
         
