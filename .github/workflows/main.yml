@@ -15,7 +15,8 @@ jobs:
         run: sudo apt install apache2 -y
         
       - name: Check Apache version
-        run: apache2 -V
+        run: sudo systemctl status apache2
+
         
       - name: Start Apache service
         run: sudo systemctl start apache2
