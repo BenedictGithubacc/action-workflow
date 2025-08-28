@@ -12,8 +12,10 @@ jobs:
           repository: bizaXL/Frape-Docker
           ref: Devtest1
           token: ${{ secrets.PAT }}
-
-      
+      - name: change directory
+        run: cd /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
+      - name: Start Frappe with Docker Compose
+        run: docker-compose -f pwd.yml up -d
 
 
         
