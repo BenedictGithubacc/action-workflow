@@ -1,13 +1,10 @@
 name: docker-compose
-
 on:
   workflow_dispatch:
-
 jobs:
   deploy-frappe:
     runs-on: self-hosted
     name: Deploy Frappe with Docker Compose
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,15 +16,14 @@ jobs:
       - name: Update package list
         run: sudo apt update
 
-      - name: Change to project directory
-        run: cd ${{ github.workspace }}
-
-      -name: useradd
+      - name: Add user to docker group (note: may not work as expected in CI runner)
         run: sudo usermod -aG docker $USER
 
       - name: Bring up services
-        run: docker-compose -f pwd.yml up -d
+        run: docker-compose up -d
+        working-directory: ${{ github.workspace }}
 
       - name: List running containers
         run: docker ps
+
         
