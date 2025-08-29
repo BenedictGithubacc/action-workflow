@@ -14,8 +14,17 @@ jobs:
           token: ${{ secrets.PAT }}
       - name: change directory
         run: cd /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
-      - name: Start Frappe with Docker Compose
-        run: docker-compose -f pwd.yml up -d
+      - name: docker build
+        run: docker build \
+             --no-cache \
+             --build-arg=FRAPPE_PATH=https://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@github.com/bizaXL/Frappe-p.git \
+             --build-arg=FRAPPE_BRANCH=master \
+             --build-arg=PYTHON_VERSION=3.11.9 \
+             --build-arg=NODE_VERSION=20.19.2 \
+             --build-arg=APPS_JSON_BASE64=$APPS_JSON_BASE64 \
+             --tag=benedictdockeracc/build-image:v2 \
+             --file=/images/custom/Containerfile .
+     
 
 
         
