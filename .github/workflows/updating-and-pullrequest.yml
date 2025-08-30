@@ -1,0 +1,17 @@
+name: Deploy
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
+jobs:
+  pull request:
+    runs-on: self hosted
+    name: checkout
+    uses: actions/checkout@4
+    with:
+      repository: bzaXL/Frape-Docker
+      ref: Devtest1
+      token: ${{ secret.PAT }}
+  
+  
