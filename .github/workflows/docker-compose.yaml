@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: bizaXL/Frape-Docker
-          ref: Devtest1
+          ref: Devtest2
           token: ${{ secrets.PAT }}
       
       - name: Docker build
