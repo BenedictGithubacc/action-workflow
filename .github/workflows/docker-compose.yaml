@@ -6,6 +6,15 @@ jobs:
     runs-on: self-hosted
     name: Deploy Frappe with Docker Compose
     steps:
+      - name: Free up disk space
+        run: |
+          echo "Cleaning up Docker system and caches to free disk space..."
+          docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
+          yarn cache clean || echo "Yarn cache clean failed"
+          npm cache clean --force || echo "NPM cache clean failed"
+          sudo rm -rf /home/runner/.cache/pip || echo "No pip cache or no permission"
+          sudo rm -rf /home/runner/.cache/yarn || echo "No yarn cache or no permission"
+      
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
