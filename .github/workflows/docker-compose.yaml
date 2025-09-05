@@ -21,6 +21,10 @@ jobs:
           repository: bizaXL/Frape-Docker
           ref: Devtest2
           token: ${{ secrets.PAT }}
+      - name: exporting
+        run: |
+             export APPS_JSON_BASE64=$(base64 -w 0 ./apps.json)
+             --echo -n ${APPS_JSON_BASE64} | base64 -d > apps-test-output.json
       
       - name: Docker build
         run: |
@@ -31,7 +35,7 @@ jobs:
             --build-arg=PYTHON_VERSION=3.11.9 \
             --build-arg=NODE_VERSION=20.19.2 \
             --build-arg=APPS_JSON_BASE64=$APPS_JSON_BASE64 \
-            --tag=benedictdockeracc/build-image:v5 \
+            --tag=benedictdockeracc/build-image:v6 \
             --file=./images/custom/Containerfile .
         working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
       
@@ -41,7 +45,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_password }}
       - name: Docker push
-        run: docker push benedictdockeracc/build-image:v5
+        run: docker push benedictdockeracc/build-image:v6
 
      
 
