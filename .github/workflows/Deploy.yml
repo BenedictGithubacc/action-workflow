@@ -1,0 +1,19 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:                             # Fixed job name typo from "debloy" to "deploy"
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository    # It’s common to add a checkout step first
+        uses: actions/checkout@v3
+
+      - name: Deploy app
+        working-directory: ./action-workflow/action-workflow
+        run: |
+          docker-compose -f pwd.yml up -d
+
+      
