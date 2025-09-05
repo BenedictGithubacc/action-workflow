@@ -21,12 +21,21 @@ jobs:
           repository: bizaXL/Frape-Docker
           ref: Devtest2
           token: ${{ secrets.PAT }}
-      - name: exporting
+      - name: Export and verify apps.json base64
+        shell: bash
         run: |
-             export APPS_JSON_BASE64=$(base64 -w 0 ./apps.json)
-             --echo -n ${APPS_JSON_BASE64} | base64 -d > apps-test-output.json
-      
+             # Encode apps.json to Base64 without newlines
+             APPS_JSON_BASE64=$(base64 -w 0 ./apps.json)
+             # Export the variable for subsequent steps
+             echo "APPS_JSON_BASE64=$APPS_JSON_BASE64" >> $GITHUB_ENV
+             # Decode Base64 back to JSON file for verification
+             echo -n "${APPS_JSON_BASE64}" | base64 -d > apps-test-output.json
+             # Optionally, check the file content (for debug only)
+             cat apps-test-output.json
+
+
       - name: Docker build
+        working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
         run: |
           docker build \
             --no-cache \
@@ -37,7 +46,6 @@ jobs:
             --build-arg=APPS_JSON_BASE64=$APPS_JSON_BASE64 \
             --tag=benedictdockeracc/build-image:v6 \
             --file=./images/custom/Containerfile .
-        working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
       
       - name: Login to Docker Hub
         uses: docker/login-action@v3
