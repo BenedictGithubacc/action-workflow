@@ -14,4 +14,8 @@ jobs:
     steps:
       - run: echo "Previous workflow succeeded, running this workflow now."
     -name: checkout
-     uses: 
+     uses: actions/checkout@v4
+        with:
+          repository: bizaXL/Frape-Docker
+          ref: Devtest2
+          token: ${{ secrets.PAT }}
