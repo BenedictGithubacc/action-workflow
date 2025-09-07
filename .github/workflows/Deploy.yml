@@ -1,13 +1,17 @@
 name: Deploy
 
 on:
-  workflow_dispatch:
-
+  workflow_run:
+    workflows:
+      - "docker-compose.yml"    # workflow to wait for
+    types:
+      - completed                  # trigger when it completes
 jobs:
-  deploy:                             # Fixed job name typo from "debloy" to "deploy"
+   run-after-success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
     runs-on: self-hosted
-
     steps:
+      - run: echo "Previous workflow succeeded, running this workflow now."
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -18,6 +22,9 @@ jobs:
       - name: Deploy app
         working-directory: .
         run: |
+          docker-compose down
+          docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 action-workflow_db_1
+          socker container prune -f
           docker-compose -f pwd.yml up -d
 
       
