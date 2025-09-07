@@ -1,11 +1,11 @@
 name: Deploy
 
 on:
-  # workflow_run:
-  #   workflows:
-  #     - "docker-compose"    # workflow to wait for; should be exact workflow name
-  #   types:
-  #     - completed
+  workflow_run:
+    workflows:
+      - "docker-compose"    # workflow to wait for; should be exact workflow name
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:
