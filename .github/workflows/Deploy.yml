@@ -3,22 +3,23 @@ name: Deploy
 on:
   workflow_run:
     workflows:
-      - "docker-compose"    # workflow to wait for
+      - "docker-compose"    # workflow to wait for; should be exact workflow name
     types:
-      - completed                  # trigger when it completes
+      - completed
   workflow_dispatch:
+
 jobs:
-   run-after-success:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
+  run-after-success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: self-hosted
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: bizaXL/Frape-Docker
+          repository: bizaXL/Frappe-Docker    # Check spelling of repo name (Frappe vs Frape)
           ref: Devtest2
           token: ${{ secrets.PAT }}
-
+      
       - name: Deploy app
         working-directory: .
         run: |
@@ -26,5 +27,6 @@ jobs:
           docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 action-workflow_db_1
           docker container prune -f
           docker-compose -f pwd.yml up -d
+
 
       
