@@ -17,7 +17,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: bizaXL/Frappe-Docker    # Check spelling of repo name (Frappe vs Frape)
+          repository: bizaXL/Frape-Docker    # Check spelling of repo name (Frappe vs Frape)
           ref: Devtest2
           token: ${{ secrets.PAT }}
       
