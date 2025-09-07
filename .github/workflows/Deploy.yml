@@ -6,6 +6,7 @@ on:
       - "docker-compose"    # workflow to wait for
     types:
       - completed                  # trigger when it completes
+  workflow_dispatch:
 jobs:
    run-after-success:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
@@ -24,7 +25,7 @@ jobs:
         run: |
           docker-compose down
           docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 action-workflow_db_1
-          socker container prune -f
+          docker container prune -f
           docker-compose -f pwd.yml up -d
 
       
