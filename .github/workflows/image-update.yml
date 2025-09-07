@@ -1,0 +1,15 @@
+name: image update
+
+on:
+  workflow_run:
+    workflows:
+      - ""    # workflow to wait for
+    types:
+      - completed                  # trigger when it completes
+
+jobs:
+  run-after-success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Previous workflow succeeded, running this workflow now."
