@@ -44,7 +44,7 @@ jobs:
             --build-arg=PYTHON_VERSION=3.11.9 \
             --build-arg=NODE_VERSION=20.19.2 \
             --build-arg=APPS_JSON_BASE64=$APPS_JSON_BASE64 \
-            --tag=benedictdockeracc/build-image:v8 \
+            --tag=benedictdockeracc/build-image:${{ github.run_number }} \
             --file=./images/custom/Containerfile .
       
       - name: Login to Docker Hub
@@ -53,7 +53,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_password }}
       - name: Docker push
-        run: docker push benedictdockeracc/build-image:v8
+        run: docker push benedictdockeracc/build-image:${{ github.run_number }}
+      - name: Checkout other repo
+        run: |
+             git clone --branch Devtest2 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
+      - name: Update pwd.yml file
+        run: |
+             sed -i 's|image:.*|image: benedictdockeracc/build-image:${{ github.run_number }}|' Frape-Docker/pwd.yml
+      - name: Commit and push changes to other repo
+        run: |
+             cd Frape-Docker
+             git config user.name "bizaXL"
+             git config user.email "github@bizaxl.com"
+             git add pwd.yml
+             git commit -m "Update image tag to build number ${{ github.run_number }}"
+             git push origin Devtest2
+
+
+
+             
 
      
 
