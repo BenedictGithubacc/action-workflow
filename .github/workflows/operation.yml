@@ -1,5 +1,17 @@
 name: update changes
 
 on:
-  worklow_dispatch:
+   worklow-dispatch:
+
+jobs:
+  new-update:
+    name: new-update
+    runs_on: self-hosted
+    steps: 
+      - name: update the changer
+        run: |
+             docker exec -it action-workflow_frontend_1 /bin/bash
+             
+             
+  
   
