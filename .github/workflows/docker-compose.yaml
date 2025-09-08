@@ -59,7 +59,11 @@ jobs:
              git clone --branch Devtest2 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
       - name: Update pwd.yml file
         run: |
-             sed -i -E '/image:.*(db|redis-queue|redis-cache)/! s|image:.*|image: benedictdockeracc/build-image:${{ github.run_number }}|' Frape-Docker/pwd.yml
+             sed -i -E \
+             '/image:[[:space:]]*(redis:|mariadb:)/! {     # if not a redis:/mariadb: image
+             s|^( *)(image:[[:space:]]*).*|\1image: benedictdockeracc/build-image:'"${{ github.run_number }}"'|
+             }' Frape-Docker/pwd.yml
+
       - name: Commit and push changes to other repo
         run: |
              cd Frape-Docker
