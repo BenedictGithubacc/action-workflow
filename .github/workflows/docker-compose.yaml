@@ -54,7 +54,7 @@ jobs:
         run: docker push benedictdockeracc/build-image:${{ github.run_number }}
       - name: Checkout other repo
         run: |
-             git clone --branch Devtest2 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
+             git clone --branch Devtest1 https://github.com/bizaXL/frappe_docker.git
       - name: Update pwd.yml file
         run: |
              sed -i -E \
