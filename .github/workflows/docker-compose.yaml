@@ -37,7 +37,7 @@ jobs:
         working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
         run: |
           docker build \
-            --no-cache
+            --no-cache \
             --build-arg=FRAPPE_PATH=https://github.com/frappe/frappe.git \
             --build-arg=FRAPPE_BRANCH=version-15 \
             --build-arg=PYTHON_VERSION=3.11.9 \
