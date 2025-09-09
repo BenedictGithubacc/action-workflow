@@ -6,10 +6,10 @@ jobs:
     runs-on: self-hosted
     name: Deploy Frappe with Docker Compose
     steps:
-      #- name: Free up disk space
-        #run: |
-          #echo "Cleaning up Docker system and caches to free disk space..."
-          #docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
+      - name: Free up disk space
+        run: |
+          echo "Cleaning up Docker system and caches to free disk space..."
+          docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
           # yarn cache clean || echo "Yarn cache clean failed"
           # npm cache clean --force || echo "NPM cache clean failed"
           # sudo rm -rf /home/runner/.cache/pip || echo "No pip cache or no permission"
@@ -18,8 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: bizaXL/frappe_docker
-          ref: Devtest1
+          repository: bizaXL/Frape-Docker
+          ref: Devtest2
+          token: ${{ secrets.PAT }}
       - name: Export and verify apps.json base64
         shell: bash
         run: |
@@ -55,7 +56,7 @@ jobs:
         run: docker push benedictdockeracc/build-image:${{ github.run_number }}
       - name: Checkout other repo
         run: |
-             git clone --branch Devtest1 https://github.com/bizaXL/frappe_docker.git
+             git clone --branch Devtest2 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
       - name: Update pwd.yml file
         run: |
              sed -i -E \
