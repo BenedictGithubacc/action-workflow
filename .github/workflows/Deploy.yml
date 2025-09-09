@@ -24,7 +24,7 @@ jobs:
       - name: Deploy app
         working-directory: .
         run: |
-          #docker-compose down
+          docker-compose down
           #docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 
           docker container prune -f
           docker-compose -f pwd.yml up -d
