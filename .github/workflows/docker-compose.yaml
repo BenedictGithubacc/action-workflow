@@ -6,8 +6,8 @@ jobs:
     runs-on: self-hosted
     name: Deploy Frappe with Docker Compose
     steps:
-      #- name: Free up disk space
-        #run: |
+      - name: Free up disk space
+        run: |
           #echo "Cleaning up Docker system and caches to free disk space..."
           #docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
           # yarn cache clean || echo "Yarn cache clean failed"
@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: bizaXL/Frape-Docker
-          ref: Devtest2
+          ref: Devtest1
           token: ${{ secrets.PAT }}
       - name: Export and verify apps.json base64
         shell: bash
