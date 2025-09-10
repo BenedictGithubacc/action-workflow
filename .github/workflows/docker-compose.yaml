@@ -8,8 +8,8 @@ jobs:
     steps:
       - name: Free up disk space
         run: |
-          #echo "Cleaning up Docker system and caches to free disk space..."
-          #docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
+          echo "Cleaning up Docker system and caches to free disk space..."
+          docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
           # yarn cache clean || echo "Yarn cache clean failed"
           # npm cache clean --force || echo "NPM cache clean failed"
           # sudo rm -rf /home/runner/.cache/pip || echo "No pip cache or no permission"
@@ -38,7 +38,7 @@ jobs:
         working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
         run: |
           docker build \
-            --build-arg=FRAPPE_PATH=https://github.com/frappe/frappe.git \
+            --build-arg=FRAPPE_PATH=https://${{ secrets.PAT }}@github.com/bizaXL/Frappe-p.git \
             --build-arg=FRAPPE_BRANCH=version-15 \
             --build-arg=PYTHON_VERSION=3.11.9 \
             --build-arg=NODE_VERSION=20.19.2 \
@@ -55,7 +55,7 @@ jobs:
         run: docker push benedictdockeracc/build-image:${{ github.run_number }}
       - name: Checkout other repo
         run: |
-             git clone --branch Devtest2 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
+             git clone --branch Devtest1 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
       - name: Update pwd.yml file
         run: |
              sed -i -E \
@@ -70,7 +70,7 @@ jobs:
              git config user.email "github@bizaxl.com"
              git add pwd.yml
              git commit -m "Update image tag to build number ${{ github.run_number }}"
-             git push origin Devtest2
+             git push origin Devtest1
 
 
 
