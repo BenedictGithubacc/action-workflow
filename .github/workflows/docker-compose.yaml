@@ -53,13 +53,8 @@ jobs:
           registry: ${{ secrets.HARBOR_REGISTRY }}
           username: ${{ secrets.HARBOR_USERNAME }}  # robot$gha-bot
           password: ${{ secrets.HARBOR_PASSWORD }}
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ secrets.HARBOR_REGISTRY }}/build-image/my-app:${{ github.run_number }}
+      - name: Push Docker image
+        run: docker push ${{ secrets.HARBOR_REGISTRY }}/build-image/my-app:${{ github.run_number }}
       - name: Checkout other repo
         run: |
              git clone --branch Devtest1 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
