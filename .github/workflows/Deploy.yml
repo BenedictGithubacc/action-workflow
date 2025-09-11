@@ -21,6 +21,12 @@ jobs:
           ref: Devtest1
           token: ${{ secrets.PAT }}
       
+      - name: Log in to Harbor
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.HARBOR_REGISTRY }}
+          username: ${{ secrets.HARBOR_USERNAME }}
+          password: ${{ secrets.HARBOR_PASSWORD }}
       - name: Deploy app
         working-directory: .
         run: |
