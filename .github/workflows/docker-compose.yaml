@@ -49,7 +49,7 @@ jobs:
       - name: Log in to Harbor
         uses: docker/login-action@v2
         with:
-          registry: ${{ secrets.HARBOR_REGISTRY }}
+          registry: http://192.168.0.135
           username: ${{ secrets.HARBOR_USERNAME }}  # robot$gha-bot
           password: ${{ secrets.HARBOR_PASSWORD }}
       - name: Push Docker image
