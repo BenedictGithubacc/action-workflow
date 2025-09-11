@@ -43,7 +43,7 @@ jobs:
             --build-arg=PYTHON_VERSION=3.11.9 \
             --build-arg=NODE_VERSION=20.19.2 \
             --build-arg=APPS_JSON_BASE64=$APPS_JSON_BASE64 \
-            --tag=192.168.0.16:80/build-image:${{ github.run_number }} \
+            --tag=192.168.0.16:80/build-image/my-app:${{ github.run_number }} \
             --file=./images/custom/Containerfile .
       
       - name: Log in to Harbor
