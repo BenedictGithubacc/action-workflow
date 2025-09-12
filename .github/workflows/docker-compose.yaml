@@ -6,7 +6,7 @@ jobs:
     runs-on: self-hosted
     name: Deploy Frappe with Docker Compose
     steps:
-      - name: Free up disk space
+      #- name: Free up disk space
         #run: |
           #echo "Cleaning up Docker system and caches to free disk space..."
           #docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
