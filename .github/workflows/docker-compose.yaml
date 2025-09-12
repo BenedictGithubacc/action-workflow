@@ -7,9 +7,9 @@ jobs:
     name: Deploy Frappe with Docker Compose
     steps:
       - name: Free up disk space
-        run: |
-          echo "Cleaning up Docker system and caches to free disk space..."
-          docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
+        #run: |
+          #echo "Cleaning up Docker system and caches to free disk space..."
+          #docker system prune --all --force --volumes || echo "No Docker to prune or no permission"
           # yarn cache clean || echo "Yarn cache clean failed"
           # npm cache clean --force || echo "NPM cache clean failed"
           # sudo rm -rf /home/runner/.cache/pip || echo "No pip cache or no permission"
@@ -38,7 +38,6 @@ jobs:
         working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
         run: |
           docker build \
-            --no-cache \
             --build-arg=FRAPPE_PATH=https://${{ secrets.PAT }}@github.com/bizaXL/Frappe-p.git \
             --build-arg=FRAPPE_BRANCH=version-15 \
             --build-arg=PYTHON_VERSION=3.11.9 \
