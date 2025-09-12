@@ -61,7 +61,7 @@ jobs:
         run: |
              sed -i -E \
              '/image:[[:space:]]*(redis:|mariadb:)/! {     # if not a redis:/mariadb: image
-             s|^( *)(image:[[:space:]]*).*|\1image: benedictdockeracc/build-image:'"${{ github.run_number }}"'|
+             s|^( *)(image:[[:space:]]*).*|\1image: 192.168.0.135:80/build-image/my-app:'"${{ github.run_number }}"'|
              }' Frape-Docker/pwd.yml
 
       - name: Commit and push changes to other repo
