@@ -38,7 +38,6 @@ jobs:
         working-directory: /home/ubuntu/actions-runner/_work/action-workflow/action-workflow
         run: |
           docker build \
-            --no-cache \
             --build-arg=FRAPPE_PATH=https://${{ secrets.PAT }}@github.com/bizaXL/Frappe-p.git \
             --build-arg=FRAPPE_BRANCH=version-15 \
             --build-arg=PYTHON_VERSION=3.11.9 \
@@ -54,7 +53,7 @@ jobs:
           username: ${{ secrets.HARBOR_USERNAME }}  # robot$gha-bot
           password: ${{ secrets.HARBOR_PASSWORD }}
       - name: Push Docker image
-        run: docker push 192.168.0.16:80/build-image/my-app:${{ github.run_number }}
+        run: docker push 192.168.0.135:80/build-image/my-app:${{ github.run_number }}
       - name: Checkout other repo
         run: |
              git clone --branch Devtest1 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
