@@ -3,7 +3,7 @@ name: Deploy
 on:
   workflow_run:
     workflows:
-      - "docker-compose.yml"    # workflow to wait for
+      - "docker-compose"    # workflow to wait for
     types:
       - completed                  # trigger when it completes
 jobs:
