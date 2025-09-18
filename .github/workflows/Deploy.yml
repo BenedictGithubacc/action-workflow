@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: bizaXL/Frape-Docker
-          ref: Devtest2
+          ref: Devtest1
           token: ${{ secrets.PAT }}
 
       - name: Deploy app
