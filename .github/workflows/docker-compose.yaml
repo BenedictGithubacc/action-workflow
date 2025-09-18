@@ -43,17 +43,16 @@ jobs:
             --build-arg=PYTHON_VERSION=3.11.9 \
             --build-arg=NODE_VERSION=20.19.2 \
             --build-arg=APPS_JSON_BASE64=$APPS_JSON_BASE64 \
-            --tag=192.168.0.135:80/build-image/my-app:${{ github.run_number }} \
+            --tag=benedictdockeracc/build-image:${{ github.run_number }} \
             --file=./images/custom/Containerfile .
       
-      - name: Log in to Harbor
-        uses: docker/login-action@v2
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
         with:
-          registry: 192.168.0.135:80
-          username: ${{ secrets.HARBOR_USERNAME }}  # robot$gha-bot
-          password: ${{ secrets.HARBOR_PASSWORD }}
-      - name: Push Docker image
-        run: docker push 192.168.0.135:80/build-image/my-app:${{ github.run_number }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_password }}
+      - name: Docker push
+        run: docker push benedictdockeracc/build-image:${{ github.run_number }}
       - name: Checkout other repo
         run: |
              git clone --branch Devtest1 https://${{ secrets.PAT }}@github.com/bizaXL/Frape-Docker.git
@@ -61,7 +60,7 @@ jobs:
         run: |
              sed -i -E \
              '/image:[[:space:]]*(redis:|mariadb:)/! {     # if not a redis:/mariadb: image
-             s|^( *)(image:[[:space:]]*).*|\1image: 192.168.0.135:80/build-image/my-app:'"${{ github.run_number }}"'|
+             s|^( *)(image:[[:space:]]*).*|\1image: benedictdockeracc/build-image:'"${{ github.run_number }}"'|
              }' Frape-Docker/pwd.yml
 
       - name: Commit and push changes to other repo
@@ -72,12 +71,3 @@ jobs:
              git add pwd.yml
              git commit -m "Update image tag to build number ${{ github.run_number }}"
              git push origin Devtest1
-
-
-
-             
-
-     
-
-
-        
