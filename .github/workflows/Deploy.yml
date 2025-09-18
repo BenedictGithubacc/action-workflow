@@ -25,6 +25,6 @@ jobs:
         working-directory: .
         run: |
           docker compose down
-          docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 action-workflow_db_1
+          #docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 action-workflow_db_1
           socker container prune -f
           docker compose -f pwd.yml up -d
