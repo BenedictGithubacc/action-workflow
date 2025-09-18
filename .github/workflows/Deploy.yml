@@ -7,11 +7,12 @@ on:
     types:
       - completed                  # trigger when it completes
 jobs:
-   run-after-success:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
+   #run-after-success:
+    #if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
+  deploy-job:
     runs-on: self-hosted
     steps:
-      - run: echo "Previous workflow succeeded, running this workflow now."
+      #- run: echo "Previous workflow succeeded, running this workflow now."
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
