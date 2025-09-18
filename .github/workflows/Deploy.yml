@@ -8,7 +8,7 @@ on:
       - completed                  # trigger when it completes
 jobs:
    run-after-success:
-    #if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
     runs-on: self-hosted
     steps:
       - run: echo "Previous workflow succeeded, running this workflow now."
