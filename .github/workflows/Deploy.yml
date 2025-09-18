@@ -5,7 +5,8 @@ on:
     workflows:
       - "docker-compose"    # workflow to wait for
     types:
-      - completed                  # trigger when it completes
+      - completed # trigger when it completes
+  workflow_dispatch:
 jobs:
    #run-after-success:
     #if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
