@@ -3,37 +3,26 @@ name: Deploy
 on:
   workflow_run:
     workflows:
-      - "docker-compose"    # workflow to wait for; should be exact workflow name
+      - "docker-compose.yml"    # workflow to wait for
     types:
-      - completed
-  workflow_dispatch:
-
+      - completed                  # trigger when it completes
 jobs:
-  # run-after-success:
-  #   if: ${{ github.event.workflow_run.conclusion == 'success' }}
-  deploy-job:
+   run-after-success:
+    #if: ${{ github.event.workflow_run.conclusion == 'success' }}   # run only if previous workflow succeeded
     runs-on: self-hosted
     steps:
+      - run: echo "Previous workflow succeeded, running this workflow now."
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          repository: bizaXL/Frape-Docker    # Check spelling of repo name (Frappe vs Frape)
-          ref: Devtest1
+          repository: bizaXL/Frape-Docker
+          ref: Devtest2
           token: ${{ secrets.PAT }}
-      
-      - name: Log in to Harbor
-        uses: docker/login-action@v2
-        with:
-          registry: 192.168.0.135:80
-          username: ${{ secrets.HARBOR_USERNAME }}
-          password: ${{ secrets.HARBOR_PASSWORD }}
+
       - name: Deploy app
         working-directory: .
         run: |
           docker-compose down
-          #docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 
-          docker container prune -f
+          docker stop action-workflow_redis-queue_1 action-workflow_redis-cache_1 action-workflow_db_1
+          socker container prune -f
           docker-compose -f pwd.yml up -d
-
-
-      
